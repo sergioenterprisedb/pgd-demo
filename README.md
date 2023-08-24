@@ -10,7 +10,7 @@ node1                     running (virtualbox)  -> PGD Node 1
 node2                     running (virtualbox)  -> PGD Node 2
 node3                     running (virtualbox)  -> PGD Node 3
 node4                     running (virtualbox)  -> PGD Node 4
-node5                     running (virtualbox)  -> PGD Node 5
+node5                     running (virtualbox)  -> PGD Node 5 (not used in this demo but ready for new PGD nodes if necessary)
 node6                     running (virtualbox)  -> Barman
 
 
