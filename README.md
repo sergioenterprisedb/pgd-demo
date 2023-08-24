@@ -1,5 +1,7 @@
 # Description
-In this demo I'll show how to create a Vagrant environment with EDB Postgres Distributed 5.x (PGD) installed and upgrade an EDB Postgres Advanced Server 14 (EPAS 14.x) environment to an EPAS 15.x without downtime.
+In this demo I'll show how to create a Vagrant environment with [EDB Postgres Distributed] (https://www.enterprisedb.com/products/edb-postgres-distributed) 5.x (PGD) installed and upgrade an EDB Postgres Advanced Server 14 (EPAS 14.x) environment to an EPAS 15.x without downtime.
+You can find the documentation of EDB Postgres Distributed [here](https://www.enterprisedb.com/docs/pgd/latest/)
+ 
 This environment will contain 6 VM's:
 ```
 > vagrant status
@@ -40,9 +42,8 @@ node6                     running (virtualbox)  -> Barman
 ```
 
 # Prerequisites
-- Vagrant
+- [Vagrant] (https://www.vagrantup.com)
 - EDB repository access
-- EDB Postgres Distributed
 
 # Start VM's
 ```
