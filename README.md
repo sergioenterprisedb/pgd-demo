@@ -5,25 +5,25 @@ You can find the documentation of EDB Postgres Distributed [here](https://www.en
 This environment will contain 7 VM's:
 ```
 
-                  +---------------+
-             +--->|  node1 - PGD  |
-             |    +---------------+
-             |    +---------------+
-             +--->|  node2 - PGD  |
-             |    +---------------+
-             |    +---------------+
-             |    |  node3 - PGD  |
-+---------+  |    +---------------+
-|  node0  |--|
-+---------+  |    +---------------+
-             +--->|  node4 - PGD  |
-             |    +---------------+
-             |    +---------------+
-             +--->|  node5 - PGD  |
-             |    +---------------+
-             |    +-------------------+
-             +--->|  node6 -> barman  |
-                  +-------------------+
+                     +---------------+
+                +--->|  node1 - PGD  |
+                |    +---------------+
+                |    +---------------+
+                +--->|  node2 - PGD  |
+                |    +---------------+
+                |    +---------------+
+                |--->|  node3 - PGD  |
++---------------+    +---------------+
+|  node0 - TPA  |
++---------------+    +---------------+
+                +--->|  node4 - PGD  |
+                |    +---------------+
+                |    +---------------+
+                +--->|  node5 - PGD  |
+                |    +---------------+
+                |    +-------------------+
+                +--->|  node6 -> barman  |
+                     +-------------------+
 
 
 
@@ -61,6 +61,7 @@ export repo_credentials=<your_repo_password>
 
 # Install EDB Postgres Distributed (EPD)
 - Connect to node0
+- This demo will use TPA [Trusted Postgres Architect](https://www.enterprisedb.com/docs/tpa/latest/) to deploy EDB Postgres Distributed.
 ```
 vagrant ssh node0
 
