@@ -55,6 +55,12 @@ Wait some seconds/minutes to start all VM's.
 vagrant status
 ```
 
+# Setup EDB repo environment variables
+To be able to download PGD, it is necessary to setup this variable with the correct value.
+```
+export repo_credentials=<your_repo_password>
+```
+
 # Install EDB Postgres Distributed (EPD)
 - Connect to node0
 ```
@@ -130,7 +136,7 @@ sys	2m39.701s
 ```
 
 # Check you PGD cluster
-Open a new terminal session and execute these commands:
+Open a new terminal session and execute these commands. Check the node4 status (CATCHUP, PROMOTING,ACTIVE):
 ```
 vagrant ssh node1
 
