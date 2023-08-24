@@ -4,18 +4,6 @@ You can find the documentation of EDB Postgres Distributed [here](https://www.en
 
 This environment will contain 7 VM's:
 ```
-> vagrant status
-Current machine states:
-
-node0                     running (virtualbox)  -> TPA node
-node1                     running (virtualbox)  -> PGD Node 1
-node2                     running (virtualbox)  -> PGD Node 2
-node3                     running (virtualbox)  -> PGD Node 3
-node4                     running (virtualbox)  -> PGD Node 4
-node5                     running (virtualbox)  -> PGD Node 5 (not used in this demo but ready for new PGD nodes if necessary)
-node6                     running (virtualbox)  -> Barman
-```
-```
 
                   +---------------+
              +--->|  node1 - PGD  |
@@ -53,7 +41,16 @@ Wait some seconds/minutes to start all VM's.
 
 # Verify VM's are started
 ```
-vagrant status
+> vagrant status
+Current machine states:
+
+node0                     running (virtualbox)  -> TPA node
+node1                     running (virtualbox)  -> PGD Node 1
+node2                     running (virtualbox)  -> PGD Node 2
+node3                     running (virtualbox)  -> PGD Node 3
+node4                     running (virtualbox)  -> PGD Node 4
+node5                     running (virtualbox)  -> PGD Node 5 (not used in this demo but ready for new PGD nodes if necessary)
+node6                     running (virtualbox)  -> Barman
 ```
 
 # Setup EDB repo environment variables
