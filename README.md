@@ -43,7 +43,7 @@ node6                     running (virtualbox)  -> Barman
 
 # Prerequisites
 - [Vagrant] (https://www.vagrantup.com)
-- EDB repository access
+- EDB repository access. If don't have an EDB user you can register [here](https://www.enterprisedb.com/accounts/register).
 
 # Start VM's
 ```
