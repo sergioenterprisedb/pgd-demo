@@ -117,7 +117,7 @@ Execute this command to create a new PGD node (node4) with Postgres 15.x version
 ```
 vagrant ssh node0
 cd /vagrant
-./02_add_new_node.sh
+./02_add_new_node.sh 4
 ...
 PLAY RECAP *************************************************************************************************************************
 localhost                  : ok=4    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
@@ -188,3 +188,13 @@ bdrdb=# \watch 5;
 - Around 2 minutes to start VM's
 - Around 15 minutes to deploy PGD in VM's
 - Around 20 minutes to add a new node
+
+# How to destroy the environment
+This command will destroy all the VM's created by vagrant (node0 to node6).
+```
+./vagrant_destroy.sh
+```
+You can destroy one by one if necessary:
+```
+vagrant destroy -f node5
+```
