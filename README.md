@@ -45,9 +45,9 @@ node6                     running (virtualbox)  -> Barman
 - EDB Postgres Distributed
 
 # Start VM's
-'''
+```
 ./vagrant_up.sh
-'''
+```
 Wait some seconds/minutes to start all VM's.
 
 # Verify VM's are started
@@ -104,7 +104,6 @@ bdrdb=# select * from bdr.node_summary ;
  node_name | node_group_name |                  interface_connstr                   | peer_state_name | peer_target_state_name | node_seq_id | node_local_dbname |  node_id   | node_group_id | node_kind_
 name
 -----------+-----------------+------------------------------------------------------+-----------------+------------------------+-------------+-------------------+------------+---------------+-----------
------
  node2     | dc1_subgroup    | host=node2 port=5444 dbname=bdrdb user=enterprisedb  | ACTIVE          | ACTIVE                 |           1 | bdrdb             | 3367056606 |    1302278103 | data
  node1     | dc1_subgroup    | host=node1 port=5444 dbname=bdrdb user=enterprisedb  | ACTIVE          | ACTIVE                 |           2 | bdrdb             | 1148549230 |    1302278103 | data
  node3     | dc1_subgroup    | host=node3 port=5444 dbname=bdrdb user=enterprisedb  | ACTIVE          | ACTIVE                 |           3 | bdrdb             |  914546798 |    1302278103 | data
@@ -134,6 +133,7 @@ real	21m14.197s
 user	9m23.203s
 sys	2m39.701s
 ```
+At this moment, node4 has been added with an EPAS 15.x
 
 # Check you PGD cluster
 Open a new terminal session and execute these commands. Check the node4 status (CATCHUP, PROMOTING,ACTIVE):
@@ -148,6 +148,17 @@ Type "help" for help.
 
 bdrdb=# select * from bdr.node_summary ;
 
+ node_name | node_group_name |                  interface_connstr                   | peer_state_name | peer_target_state_name | node_seq_id | node_local_dbname |  node_id   | node_group_id | node_kind_name
+-----------+-----------------+------------------------------------------------------+-----------------+------------------------+-------------+-------------------+------------+---------------+----------------
+ node2     | dc1_subgroup    | host=node2 port=5444 dbname=bdrdb user=enterprisedb  | ACTIVE          | ACTIVE                 |           1 | bdrdb             | 3367056606 |    1302278103 | data
+ node1     | dc1_subgroup    | host=node1 port=5444 dbname=bdrdb user=enterprisedb  | ACTIVE          | ACTIVE                 |           2 | bdrdb             | 1148549230 |    1302278103 | data
+ node3     | dc1_subgroup    | host=node3 port=5444 dbname=bdrdb user=enterprisedb  | ACTIVE          | ACTIVE                 |           3 | bdrdb             |  914546798 |    1302278103 | data
+(3 rows)
+
+bdrdb=# \watch 5;
+ ...
+ ...
+ ...
  node_name | node_group_name |                  interface_connstr                   | peer_state_name | peer_target_state_name | node_seq_id | node_local_dbname |  node_id   | node_group_id | node_kind_name
 -----------+-----------------+------------------------------------------------------+-----------------+------------------------+-------------+-------------------+------------+---------------+----------------
  node2     | dc1_subgroup    | host=node2 port=5444 dbname=bdrdb user=enterprisedb  | ACTIVE          | ACTIVE                 |           1 | bdrdb             | 3367056606 |    1302278103 | data
@@ -173,3 +184,8 @@ bdrdb=# select * from bdr.node_summary ;
 (4 rows)
 
 ```
+
+# Time to prepare the platform
+- Around 2 minutes to start VM's
+- Around 15 minutes to deploy PGD in VM's
+- Around 20 minutes to add a new node
