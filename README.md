@@ -30,6 +30,7 @@ This environment will contain 7 VM's:
 ```
 
 # Prerequisites
+- [VirtualBox](https://www.virtualbox.org)
 - [Vagrant] (https://www.vagrantup.com)
 - EDB repository access. If don't have an EDB user you can register [here](https://www.enterprisedb.com/accounts/register).
 
@@ -53,15 +54,16 @@ node5                     running (virtualbox)  -> PGD Node 5 (not used in this 
 node6                     running (virtualbox)  -> Barman
 ```
 
-# Setup EDB repo environment variables
+# Install EDB Postgres Distributed (EPD)
+- Connect to node0
+- This demo will use TPA [Trusted Postgres Architect](https://www.enterprisedb.com/docs/tpa/latest/) to deploy EDB Postgres Distributed.
+
+## Setup EDB repo environment variables
 To be able to download PGD, it is necessary to setup this variable with the correct value.
 ```
 export repo_credentials=<your_repo_password>
 ```
 
-# Install EDB Postgres Distributed (EPD)
-- Connect to node0
-- This demo will use TPA [Trusted Postgres Architect](https://www.enterprisedb.com/docs/tpa/latest/) to deploy EDB Postgres Distributed.
 ```
 vagrant ssh node0
 
