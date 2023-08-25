@@ -1,5 +1,6 @@
-# Description
-In this demo I'll show how to create a Vagrant environment with [EDB Postgres Distributed](https://www.enterprisedb.com/products/edb-postgres-distributed) 5.x (PGD) installed and upgrade an EDB Postgres Advanced Server 14 (EPAS 14.x) environment to an EPAS 15.x without downtime.
+# EDB Postgres Distributed deployment with Vagrant
+In this demo I'll show how to create a Vagrant environment with [EDB Postgres Distributed](https://www.enterprisedb.com/products/edb-postgres-distributed) 5.x (PGD) installed.
+It is also possible to upgrade an EDB Postgres Advanced Server 14 (EPAS 14.x) environment to an EPAS 15.x without downtime.
 You can find the documentation of EDB Postgres Distributed [here](https://www.enterprisedb.com/docs/pgd/latest/).
 
 This environment will contain 7 VM's:
