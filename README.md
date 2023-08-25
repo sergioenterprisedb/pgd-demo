@@ -68,7 +68,7 @@ export repo_credentials=<your_repo_password>
 - Connect as root and execute script:
 ```
 sudo -i
-cd vagrant
+cd /vagrant
 ./01_install_pgd.sh
 ```
 Result:
