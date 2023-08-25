@@ -191,8 +191,8 @@ bdrdb=# \watch 5;
 
 # Time to prepare the platform
 - Around 2 minutes to start VM's
-- Around 15 minutes to deploy PGD in VM's
-- Around 20 minutes to add a new node
+- Around 10 minutes to deploy PGD in VM's
+- Around 10 minutes to add a new node
 
 # How to destroy the environment
 This command will destroy all the VM's created by vagrant (node0 to node6).
