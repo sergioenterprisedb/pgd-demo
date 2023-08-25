@@ -19,5 +19,12 @@ asciinema play 04_add_cluster_node.cast -i 0.1
 ```
 
 # Macros
+## Deploy vagrant environement
 [![asciicast](https://asciinema.org/a/NAH8tHkzcOdHvy45Wzous5B4c.svg)](https://asciinema.org/a/NAH8tHkzcOdHvy45Wzous5B4c)
+## Deply PGD
+[![asciicast](https://asciinema.org/a/nB1XkCLIGvDhhDf9RTNU4kwGP.svg)](https://asciinema.org/a/nB1XkCLIGvDhhDf9RTNU4kwGP)
+## Check PGD environment
+[![asciicast](https://asciinema.org/a/gnlBljyVYI1Keqy5GfZLcHTqH.svg)](https://asciinema.org/a/gnlBljyVYI1Keqy5GfZLcHTqH)
+## Add EDB Postgres cluster node
+[![asciicast](https://asciinema.org/a/Pfi9A69wQWXnbSHYT7hrb60rA.svg)](https://asciinema.org/a/Pfi9A69wQWXnbSHYT7hrb60rA)
 
