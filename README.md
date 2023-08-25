@@ -56,17 +56,17 @@ node6                     running (virtualbox)  -> Barman
 
 # Install EDB Postgres Distributed (EPD)
 - Connect to node0
-- This demo will use TPA [Trusted Postgres Architect](https://www.enterprisedb.com/docs/tpa/latest/) to deploy EDB Postgres Distributed.
-
-## Setup EDB repo environment variables
-To be able to download PGD, it is necessary to setup this variable with the correct value.
-```
-export repo_credentials=<your_repo_password>
-```
 
 ```
 vagrant ssh node0
-
+```
+- This demo will use TPA [Trusted Postgres Architect](https://www.enterprisedb.com/docs/tpa/latest/) to deploy EDB Postgres Distributed.
+- To be able to download PGD, it is necessary to setup this variable with the correct value.
+```
+export repo_credentials=<your_repo_password>
+```
+- Connect as root and execute script:
+```
 sudo -i
 cd vagrant
 ./01_install_pgd.sh
