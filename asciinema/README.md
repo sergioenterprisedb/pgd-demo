@@ -18,3 +18,6 @@ asciinema play 03_check_pgd_deployment.cast -i 0.1
 asciinema play 04_add_cluster_node.cast -i 0.1
 ```
 
+# Macros
+[![asciicast](https://asciinema.org/a/NAH8tHkzcOdHvy45Wzous5B4c.svg)](https://asciinema.org/a/NAH8tHkzcOdHvy45Wzous5B4c)
+
