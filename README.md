@@ -68,7 +68,7 @@ sudo -i
 ```
 - To be able to download PGD, it is necessary to setup this variable with the correct value.
 ```
-export repo_credentials=<your_repo_password>
+export repo_credentials=<your_repo_token>
 ```
 
 ```
@@ -122,6 +122,7 @@ Execute this command to create a new PGD node (node4) with Postgres 15.x version
 - Connect to node0:
 ```
 vagrant ssh node0
+sudo -i
 cd /vagrant
 ./02_add_new_node.sh 4
 ...

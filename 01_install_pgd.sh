@@ -24,7 +24,10 @@ cat >> ~/.bash_profile <<EOF
 export PATH=$PATH:/opt/EDB/TPA/bin
 export EDB_SUBSCRIPTION_TOKEN=${credentials}
 EOF
-source ~/.bash_profile
+#source ~/.bash_profile
+export PATH=$PATH:/opt/EDB/TPA/bin
+export EDB_SUBSCRIPTION_TOKEN=${credentials}
+
 
 # Install dependencies
 tpaexec setup
