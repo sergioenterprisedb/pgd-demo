@@ -40,6 +40,9 @@ Vagrant.configure("2") do |config|
       nodes.vm.network "private_network", ip: "192.168.1.1#{i}", name: "HostOnly", virtualbox__intnet: true
       nodes.vm.network "forwarded_port", guest: 5444, host: "544#{i}"
       nodes.vm.network "forwarded_port", guest: 6432, host: "643#{i}"
+      nodes.vm.network "forwarded_port", guest: 8443, host: "54#{i}"
+      nodes.vm.network "forwarded_port", guest: 8080, host: "8#{i}"
+      
       nodes.vm.provider "virtualbox" do |v|
         v.memory = "1024"
         v.cpus = "2"

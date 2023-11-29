@@ -30,7 +30,8 @@ export EDB_SUBSCRIPTION_TOKEN=${credentials}
 
 
 # Install dependencies
-tpaexec setup
+#tpaexec setup
+tpaexec setup --use-2q-ansible
 
 # Test
 tpaexec selftest
@@ -55,7 +56,7 @@ tpaexec configure ~/clusters/speedy \
     --edb-postgres-advanced 14 \
     --no-git \
     --location-names dc1 \
-    --pgd-proxy-routing global \
+    --pgd-proxy-routing local \
     --hostnames-unsorted
 
 # Modify pg_hba.conf
