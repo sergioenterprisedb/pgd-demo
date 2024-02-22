@@ -15,7 +15,22 @@ rpm -ivh http://repo.openfusion.net/centos7-x86_64/bat-0.7.0-1.of.el7.x86_64.rpm
 # PGD 5.x
 curl -1sLf "https://downloads.enterprisedb.com/$credentials/postgres_distributed/setup.rpm.sh" | sudo -E bash
 
-yum -y install wget chrony tpaexec tpaexec-deps
+#yum -y install python39 wget chrony tpaexec tpaexec-deps
+
+# TPA
+#sudo yum -y install python36 python3-pip epel-release git openvpn patch
+#sudo yum -y install python39 python3-pip epel-release git openvpn patch
+sudo dnf -y remove python3
+sudo yum -y install tpaexec
+sudo yum -y install python39 python39-pip epel-release git openvpn patch
+
+git clone https://github.com/enterprisedb/tpa.git ~/tpa
+
+cat >> ~/.bash_profile <<EOF
+export PATH=$PATH:$HOME/tpa/bin
+EOF
+source ~/.bash_profile
+
 # Config file: /etc/chrony.conf
 systemctl enable --now chronyd
 chronyc sources
@@ -24,14 +39,14 @@ cat >> ~/.bash_profile <<EOF
 export PATH=$PATH:/opt/EDB/TPA/bin
 export EDB_SUBSCRIPTION_TOKEN=${credentials}
 EOF
-#source ~/.bash_profile
+source ~/.bash_profile
 export PATH=$PATH:/opt/EDB/TPA/bin
 export EDB_SUBSCRIPTION_TOKEN=${credentials}
 
 
 # Install dependencies
-#tpaexec setup
-tpaexec setup --use-2q-ansible
+tpaexec setup
+#tpaexec setup --use-2q-ansible
 
 # Test
 tpaexec selftest
@@ -61,6 +76,14 @@ tpaexec configure ~/clusters/speedy \
 
 # Modify pg_hba.conf
 cp ~/clusters/speedy/config.yml ~/clusters/speedy/config.yml.1
+
+
+# Key paring remove
+sed -i 's/keyring_backend/#keyring_backend/' ~/clusters/speedy/config.yml
+sed -i 's/vault_name/#vault_name/' ~/clusters/speedy/config.yml
+
+# Add locale
+sed -i '/cluster_vars:/a \\  postgres_locale: C.UTF-8' ~/clusters/speedy/config.yml
 
 # Replace barman node4 to node6
 sed -i 's/node4/node6/' ~/clusters/speedy/config.yml

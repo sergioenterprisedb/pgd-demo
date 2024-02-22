@@ -42,6 +42,7 @@ Vagrant.configure("2") do |config|
       nodes.vm.network "forwarded_port", guest: 6432, host: "643#{i}"
       nodes.vm.network "forwarded_port", guest: 8443, host: "54#{i}"
       nodes.vm.network "forwarded_port", guest: 8080, host: "8#{i}"
+      nodes.vm.network "forwarded_port", guest: 22, host: "220#{i}"
       
       nodes.vm.provider "virtualbox" do |v|
         v.memory = "1024"
