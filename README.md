@@ -114,6 +114,16 @@ name
  node3     | dc1_subgroup    | host=node3 port=5444 dbname=bdrdb user=enterprisedb  | ACTIVE          | ACTIVE                 |           3 | bdrdb             |  914546798 |    1302278103 | data
 (3 rows)
 ```
+# Upgrade Node
+- Connect to the node you want to upgrade (ex: node1)
+```
+vagrant ssh node1
+```
+- Verify ./upgrade/config.sh file to select the right Postgres version
+- Execute command:
+```
+/vagrant/upgrade/upgrade.sh
+```
 
 # How to add a new node
 In this demo, I'm installing Postgres 14.x. With PGD you can upgrade the cluster to 15.x. 
