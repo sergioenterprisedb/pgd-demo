@@ -79,7 +79,7 @@ Vagrant.configure("2") do |config|
    (4..4).each do |i|
     config.ssh.extra_args = ["-o", "PubkeyAcceptedKeyTypes=+ssh-rsa", "-o", "HostKeyAlgorithms=+ssh-rsa"]
     config.vm.define "node#{i}" do |nodes|
-      nodes.vm.box = "generic/rocky8"
+      nodes.vm.box = "generic/rocky9"
       nodes.vm.hostname = "node#{i}"
       nodes.vm.network "private_network", ip: "192.168.1.1#{i}", name: "HostOnly", virtualbox__intnet: true
       nodes.vm.network "forwarded_port", guest: 5444, host: "544#{i}"

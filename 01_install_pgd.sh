@@ -31,6 +31,7 @@ sudo yum -y install python39 python39-pip epel-release git openvpn patch
 git clone https://github.com/enterprisedb/tpa.git ~/tpa
 
 cat >> ~/.bash_profile <<EOF
+alias bat="/usr/local/bat/bat -pp"
 export PATH=$PATH:$HOME/tpa/bin
 EOF
 source ~/.bash_profile
@@ -40,7 +41,8 @@ systemctl enable --now chronyd
 chronyc sources
 
 cat >> ~/.bash_profile <<EOF
-alias cat='/usr/local/bat/bat -pp'
+alias bat="/usr/local/bat/bat -pp"
+
 export PATH=$PATH:/opt/EDB/TPA/bin
 export EDB_SUBSCRIPTION_TOKEN=${credentials}
 EOF
