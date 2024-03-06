@@ -2,6 +2,12 @@
 
 nodeid=$1
 
+if [ `whoami` != "root" ]
+then
+  printf "You must execute this as root\n"
+  exit
+fi
+
 if [ -z "$nodeid" ]; then
   echo "NodeId can not be empty"
   exit 1
