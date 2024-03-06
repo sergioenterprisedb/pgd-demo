@@ -49,7 +49,7 @@ Wait some seconds/minutes to start all VM's.
 
 # Verify VM's are started
 ```
-> vagrant status
+vagrant status
 Current machine states:
 
 node0                     running (virtualbox)  -> TPA node
@@ -59,13 +59,6 @@ node3                     running (virtualbox)  -> PGD Node 3
 node4                     running (virtualbox)  -> PGD Node 4
 node5                     running (virtualbox)  -> PGD Node 5 (not used in this demo but ready for new PGD nodes if necessary)
 node6                     running (virtualbox)  -> Barman
-```
-# Verify VM's OS version
-Connect to node0
-```
-vagrant ssh node0
-cd /vagrant/
-./os_version.sh
 ```
 
 # Deploy EDB Postgres Distributed (PGD)
@@ -150,6 +143,14 @@ user	9m23.203s
 sys	2m39.701s
 ```
 At this moment, node4 has been added with an EPAS 15.x
+
+# Verify VM's OS version
+Connect to node0
+```
+vagrant ssh node0
+cd /vagrant/
+./os_version.sh
+```
 
 # Upgrade Node
 - Connect to the node you want to upgrade (ex: node1)
