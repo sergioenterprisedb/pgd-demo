@@ -42,10 +42,10 @@ chronyc sources
 
 cat >> ~/.bash_profile <<EOF
 alias bat="/usr/local/bat/bat -pp"
-
 export PATH=$PATH:/opt/EDB/TPA/bin
 export EDB_SUBSCRIPTION_TOKEN=${credentials}
 EOF
+
 source ~/.bash_profile
 export PATH=$PATH:/opt/EDB/TPA/bin
 export EDB_SUBSCRIPTION_TOKEN=${credentials}
@@ -111,9 +111,6 @@ tpaexec ping ~/clusters/speedy
 
 # Deploy
 tpaexec deploy ~/clusters/speedy
-
-# Change app password
-#echo -e "app\n"  | tpaexec store-password ~/clusters/speedy app
 
 # Deprovision
 #tpaexec deprovision ~/clusters/speedy

@@ -1,32 +1,38 @@
-# EDB Postgres Distributed deployment with Vagrant
-In this demo I'll show how to create a Vagrant environment with [EDB Postgres Distributed](https://www.enterprisedb.com/products/edb-postgres-distributed) 5.x (PGD) installed.
-It is also possible to upgrade an EDB Postgres Advanced Server 14 (EPAS 14.x) environment to an EPAS 15.x without downtime.
-You can find the documentation of EDB Postgres Distributed [here](https://www.enterprisedb.com/docs/pgd/latest/).
+# EDB Postgres Distributed deployments
+In this demo I'll show how deploy and upgrade a [EDB Postgres Distributed](https://www.enterprisedb.com/products/edb-postgres-distributed) 5.x (PGD) environment.
+
+Steps:
+- Deploy VM's (with Vagrant and VirtualBox)
+  - 3 nodes Rocky Linux 8
+- Install TPA [Trusted Postgres Architect](https://www.enterprisedb.com/docs/tpa/latest/)
+- Deploy 3 PGD nodes with TPA (PostgreSQL 14.x)
+- Add a new PGD node with TPA (PostgreSQL 15.x)
+- Upgrade PGD cluster from PostgreSQL 14.x to 15.x
+
+You can find the EDB Postgres Distributed documentation [here](https://www.enterprisedb.com/docs/pgd/latest/).
 
 This environment will contain 7 VM's:
 ```
 
-                        +---------------+
-                   +--->|  node1 - PGD  |
-                   |    +---------------+
-                   |    +---------------+
-                   +--->|  node2 - PGD  |
-                   |    +---------------+
-                   |    +---------------+
-                   |--->|  node3 - PGD  |
-+---------------+  |    +---------------+
-|  node0 - TPA  |--|
-+---------------+  |    +---------------+
-                   +--->|  node4 - PGD  |
-                   |    +---------------+
-                   |    +---------------+
-                   +--->|  node5 - PGD  |
-                   |    +---------------+
-                   |    +-------------------+
-                   +--->|  node6 -> barman  |
-                        +-------------------+
-
-
+                        ┌───────────────┐
+                   ┌---►│  node1 - PGD  │
+                   │    └───────────────┘
+                   │    ┌───────────────┐
+                   +---►│  node2 - PGD  │
+                   │    └───────────────┘
+                   │    ┌───────────────┐
+                   │---►│  node3 - PGD  │
+┌───────────────┐  │    └───────────────┘
+│  node0 - TPA  │──│
+└───────────────┘  │    ┌───────────────┐
+                   +---►│  node4 - PGD  │
+                   │    └───────────────┘
+                   │    ┌───────────────┐
+                   +---►│  node5 - PGD  │ (Optional)
+                   │    └───────────────┘
+                   │    ┌───────────────────┐
+                   └---►│  node6 -> barman  │
+                        └───────────────────┘
 
 ```
 
@@ -54,14 +60,21 @@ node4                     running (virtualbox)  -> PGD Node 4
 node5                     running (virtualbox)  -> PGD Node 5 (not used in this demo but ready for new PGD nodes if necessary)
 node6                     running (virtualbox)  -> Barman
 ```
+# Verify VM's OS version
+Connect to node0
+```
+vagrant ssh node0
+cd /vagrant/
+./os_version.sh
+```
 
-# Install EDB Postgres Distributed (EPD)
+# Deploy EDB Postgres Distributed (PGD)
 - Connect to node0
 
 ```
 vagrant ssh node0
 ```
-- This demo will use TPA [Trusted Postgres Architect](https://www.enterprisedb.com/docs/tpa/latest/) to deploy EDB Postgres Distributed.
+- This step will use TPA [Trusted Postgres Architect](https://www.enterprisedb.com/docs/tpa/latest/) to deploy EDB Postgres Distributed.
 - Connect as root:
 ```
 sudo -i
@@ -114,20 +127,7 @@ name
  node3     | dc1_subgroup    | host=node3 port=5444 dbname=bdrdb user=enterprisedb  | ACTIVE          | ACTIVE                 |           3 | bdrdb             |  914546798 |    1302278103 | data
 (3 rows)
 ```
-# Upgrade Node
-- Connect to the node you want to upgrade (ex: node1)
-```
-vagrant ssh node1
-```
-- Verify ./upgrade/config.sh file to select the right Postgres version
-- Execute command:
-```
-/vagrant/upgrade/upgrade.sh
-```
-
-# How to add a new node
-In this demo, I'm installing Postgres 14.x. With PGD you can upgrade the cluster to 15.x. 
-
+# Add a new node
 Execute this command to create a new PGD node (node4) with Postgres 15.x version:
 - Connect to node0:
 ```
@@ -150,6 +150,18 @@ user	9m23.203s
 sys	2m39.701s
 ```
 At this moment, node4 has been added with an EPAS 15.x
+
+# Upgrade Node
+- Connect to the node you want to upgrade (ex: node1)
+```
+vagrant ssh node1
+```
+- Verify ./upgrade/config.sh file to select the right Postgres version
+- Execute command:
+```
+/vagrant/upgrade/upgrade.sh
+```
+
 
 # Check you PGD cluster
 Open a new terminal session and execute these commands. Check the node4 status (CATCHUP, PROMOTING,ACTIVE):

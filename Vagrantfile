@@ -2,14 +2,12 @@
 # vi: set ft=ruby :
 
 var_box = "generic/rocky8"
-#var_box = "generic/rhel8"
 
 Vagrant.configure("2") do |config|
   
   config.ssh.extra_args = ["-o", "PubkeyAcceptedKeyTypes=+ssh-rsa", "-o", "HostKeyAlgorithms=+ssh-rsa"]
   config.vm.define "node0" do |nodes|
       nodes.vm.box = var_box
-      #nodes.vm.box = "generic/rhel7"
       
       nodes.vm.hostname= "node0"
       #MacOS workaround for VirtualBox 7
@@ -20,7 +18,6 @@ Vagrant.configure("2") do |config|
       v.memory = "512"
       v.cpus = "1"
       v.name = "vm_node0"
-      #v.customize ["modifyvm", :id, "--groups", "/bdr/node0"]
     end
     
     nodes.vm.synced_folder ".", "/vagrant"
