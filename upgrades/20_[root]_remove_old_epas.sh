@@ -10,7 +10,7 @@ then
   exit
 fi
 
-sudo ~enterprisedb/delete_old_cluster.sh | tee -a $script_full_path/pgd.log >/dev/null
+sudo /var/lib/edb/delete_old_cluster.sh
 
 if [ $? -ne 0 ];
 then

@@ -9,7 +9,7 @@ then
   printf "You must execute this as root\n"
   exit
 fi
-sudo sed -i -e "s/${postgres_old_version}/${postgres_new_version}/g" /etc/systemd/system/postgres.service | tee -a $script_full_path/pgd.log >/dev/null
+sudo sed -i -e "s/${postgres_old_version}/${postgres_new_version}/g" /etc/systemd/system/postgres.service
 
 if [ $? -ne 0 ];
 then

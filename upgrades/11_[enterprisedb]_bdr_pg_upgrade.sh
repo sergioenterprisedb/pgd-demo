@@ -23,7 +23,10 @@ cd
   --database bdrdb \
   --old-port 5444 \
   --new-port 5444 \
-  --socketdir ${pgd_socketdir} | tee -a $script_full_path/pgd.log >/dev/null
+  --socketdir ${pgd_socketdir}
+  # >/dev/null
+
+#  --socketdir ${pgd_socketdir} | tee -a $script_full_path/pgd.log >/dev/null
 
 if [ $? -ne 0 ];
 then

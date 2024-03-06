@@ -4,11 +4,11 @@ pgd_subgroup=dc1_subgroup
 
 linux_package_adm=yum
 
-pgd_version=edb-bdr5-epas16
+pgd_version=edb-bdr5-epas15
 pgd_utilities=edb-bdr-utilities
 
 postgres_old_version=14
-postgres_new_version=16
+postgres_new_version=15
 
 # Debian
 #pgd_old_binaries=/usr/lib/edb-as/${postgres_old_version}/bin
@@ -23,8 +23,8 @@ pgd_data=${pgd_directory}/data
 #pgd_socketdir=/var/run/edb-as
 pgd_socketdir=/tmp
 
-pgd_current_writeleader=node2
-pgd_target_writeleader=node3
+pgd_current_writeleader=node3
+pgd_target_writeleader=node2
 
 # Colors
 reset="\e[0m" #reset color

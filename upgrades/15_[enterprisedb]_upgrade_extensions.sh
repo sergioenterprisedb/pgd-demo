@@ -12,7 +12,7 @@ fi
 
 cd
 
-psql bdrdb -f update_extensions.sql | tee -a $script_full_path/pgd.log 2>/dev/null
+psql bdrdb -q -f /var/lib/edb/update_extensions.sql
 
 if [ $? -ne 0 ];
 then

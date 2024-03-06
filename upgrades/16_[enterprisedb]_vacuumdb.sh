@@ -10,7 +10,7 @@ then
   exit
 fi
 
-${pgd_new_binaries}/vacuumdb --all --analyze-in-stages | tee -a $script_full_path/pgd.log >/dev/null
+${pgd_new_binaries}/vacuumdb --all --analyze-in-stages
 
 if [ $? -ne 0 ];
 then

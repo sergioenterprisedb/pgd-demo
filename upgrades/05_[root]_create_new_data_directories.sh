@@ -12,5 +12,5 @@ fi
 
 sudo mkdir ${pgd_data}/datanew
 sudo chown enterprisedb.enterprisedb ${pgd_data}/datanew
-ls -l ${pgd_data} | tee -a $script_full_path/pgd.log >/dev/null
+ls -l ${pgd_data}
 

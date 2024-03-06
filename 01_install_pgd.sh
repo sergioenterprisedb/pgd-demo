@@ -9,8 +9,14 @@ fi
 export credentials=$repo_credentials
 
 # bat installation
-rpm -ivh http://repo.openfusion.net/centos7-x86_64/bat-0.7.0-1.of.el7.x86_64.rpm 
-
+#rpm -ivh http://repo.openfusion.net/centos7-x86_64/bat-0.7.0-1.of.el7.x86_64.rpm 
+# https://www.linode.com/docs/guides/how-to-install-and-use-the-bat-command-on-linux/
+cd /tmp
+curl -o bat.zip -L https://github.com/sharkdp/bat/releases/download/v0.18.2/bat-v0.18.2-x86_64-unknown-linux-musl.tar.gz
+tar -xvzf bat.zip
+sudo mv bat-v0.18.2-x86_64-unknown-linux-musl /usr/local/bat
+cd -
+# bat installation
 
 # PGD 5.x
 curl -1sLf "https://downloads.enterprisedb.com/$credentials/postgres_distributed/setup.rpm.sh" | sudo -E bash
@@ -18,8 +24,6 @@ curl -1sLf "https://downloads.enterprisedb.com/$credentials/postgres_distributed
 #yum -y install python39 wget chrony tpaexec tpaexec-deps
 
 # TPA
-#sudo yum -y install python36 python3-pip epel-release git openvpn patch
-#sudo yum -y install python39 python3-pip epel-release git openvpn patch
 sudo dnf -y remove python3
 sudo yum -y install tpaexec
 sudo yum -y install python39 python39-pip epel-release git openvpn patch
@@ -36,6 +40,7 @@ systemctl enable --now chronyd
 chronyc sources
 
 cat >> ~/.bash_profile <<EOF
+alias cat='/usr/local/bat/bat -pp'
 export PATH=$PATH:/opt/EDB/TPA/bin
 export EDB_SUBSCRIPTION_TOKEN=${credentials}
 EOF

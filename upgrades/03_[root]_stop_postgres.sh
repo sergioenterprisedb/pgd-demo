@@ -9,7 +9,7 @@ then
   printf "You must execute this as root\n"
   exit
 fi
-sudo systemctl stop postgres | tee -a $script_full_path/pgd.log >/dev/null
+sudo systemctl stop postgres
 
 if [ $? -ne 0 ];
 then

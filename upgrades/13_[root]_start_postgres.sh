@@ -10,7 +10,7 @@ then
   exit
 fi
 
-sudo systemctl start postgres | tee -a $script_full_path/pgd.log >/dev/null
+sudo systemctl start postgres
 
 if [ $? -ne 0 ];
 then
@@ -20,4 +20,4 @@ else
   printf "Start Postgres:                     ${green}OK${reset}\n"
 fi
 
-sudo systemctl status postgres | tee -a $script_full_path/pgd.log >/dev/null
+#sudo systemctl status postgres

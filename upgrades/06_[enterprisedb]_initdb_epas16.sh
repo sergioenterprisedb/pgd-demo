@@ -22,7 +22,7 @@ ${pgd_new_binaries}/initdb \
   -E UTF8 \
   --lc-collate=C.UTF-8 \
   --lc-ctype=C.UTF-8 \
-  --data-checksums | tee -a $script_full_path/pgd.log >/dev/null
+  --data-checksums 
 
 if [ $? -ne 0 ];
 then

@@ -10,8 +10,8 @@ then
   exit
 fi
 
-pgd show-nodes | tee -a $script_full_path/pgd.log >/dev/null
-pgd show-version | tee -a $script_full_path/pgd.log >/dev/null
-pgd show-raft | tee -a $script_full_path/pgd.log >/dev/null
-pgd show-replslots | tee -a $script_full_path/pgd.log >/dev/null
+pgd show-nodes
+pgd show-version
+pgd show-raft
+pgd show-replslots
 

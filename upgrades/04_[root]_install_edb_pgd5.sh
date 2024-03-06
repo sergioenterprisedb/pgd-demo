@@ -9,7 +9,7 @@ then
   printf "You must execute this as root\n"
   exit
 fi
-sudo ${linux_package_adm} -y install ${pgd_version} ${pgd_utilities} | tee -a $script_full_path/pgd.log >/dev/null
+sudo ${linux_package_adm} -y install ${pgd_version} ${pgd_utilities} 
 
 if [ $? -ne 0 ];
 then

@@ -10,7 +10,7 @@ then
   exit
 fi
 
-pgd switchover --group-name ${pgd_subgroup} --node-name ${pgd_target_writeleader} | tee -a $script_full_path/pgd.log >/dev/null
+pgd switchover --group-name ${pgd_subgroup} --node-name ${pgd_target_writeleader}
 
 if [ $? -ne 0 ];
 then

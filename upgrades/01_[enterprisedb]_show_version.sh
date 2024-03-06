@@ -10,7 +10,7 @@ then
   exit
 fi
 
-pgd show-version | tee -a $script_full_path/pgd.log >/dev/null
+pgd show-version
 
 if [ $? -ne 0 ];
 then

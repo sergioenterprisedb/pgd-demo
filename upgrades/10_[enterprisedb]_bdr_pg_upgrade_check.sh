@@ -12,9 +12,6 @@ fi
 
 cd
 
-#export PGDATAKEYWRAPCMD='-'
-#export PGDATAKEYUNWRAPCMD='-'
-
 /usr/bin/bdr_pg_upgrade \
   --old-bindir ${pgd_old_binaries} \
   --new-bindir ${pgd_new_binaries} \
@@ -24,7 +21,9 @@ cd
   --old-port 5444 \
   --new-port 5444 \
   --socketdir ${pgd_socketdir} \
-  --check | tee -a $script_full_path/pgd.log >/dev/null
+  --check 
+
+#| tee -a $script_full_path/pgd.log >/dev/null
 
 if [ $? -ne 0 ];
 then

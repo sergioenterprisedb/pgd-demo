@@ -14,7 +14,7 @@ psql bdrdb -c "
 select datname, datconnlimit from pg_database;
 update pg_database set datconnlimit = -1 where datname = 'bdrdb';
 select datname, datconnlimit from pg_database;
-" | tee -a $script_full_path/pgd.log >/dev/null
+"
 
 if [ $? -ne 0 ];
 then
