@@ -1,7 +1,7 @@
 # EDB Postgres Distributed deployments
 In this demo I'll show how deploy and upgrade a [EDB Postgres Distributed](https://www.enterprisedb.com/products/edb-postgres-distributed) 5.x (PGD) in a local environment with different PostgreSQL and OS versions using [Vagrant](https://www.vagrantup.com) and [VirtualBox](https://www.virtualbox.org).
 
-**With this solution, it will not be necessary to provision resources in a cloud provider and it is ideal for demos.**
+**With this solution, there is no need to provision resources from a cloud provider and it is ideal for demos.**
 
 Steps:
 - Deploy VM's (with Vagrant and VirtualBox)
