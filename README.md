@@ -1,7 +1,7 @@
 # EDB Postgres Distributed deployments
-In this demo I'll show how deploy and upgrade a [EDB Postgres Distributed](https://www.enterprisedb.com/products/edb-postgres-distributed) 5.x (PGD) environment with different PostgreSQL and OS versions in a local environment with [Vagrant](https://www.vagrantup.com) and [VirtualBox](https://www.virtualbox.org).
+In this demo I'll show how deploy and upgrade a [EDB Postgres Distributed](https://www.enterprisedb.com/products/edb-postgres-distributed) 5.x (PGD) in a local environment with different PostgreSQL and OS versions using [Vagrant](https://www.vagrantup.com) and [VirtualBox](https://www.virtualbox.org).
 
-**With this solution, it will not be necessary to provision resources in a cloud provider.**
+**With this solution, it will not be necessary to provision resources in a cloud provider and it is ideal for demos.**
 
 Steps:
 - Deploy VM's (with Vagrant and VirtualBox)
@@ -55,6 +55,11 @@ This environment will contain 7 VM's:
 - [Vagrant](https://www.vagrantup.com)
 - EDB repository access. If don't have an EDB user you can register [here](https://www.enterprisedb.com/accounts/register).
 
+# Provisioning and deployment time
+To deploy the 6 VM's, around 3 minutes.
+To deploy PGD , around 10 minutes.
+To add a new node,
+
 # Start VM's
 ```
 ./vagrant_up.sh
@@ -107,9 +112,9 @@ node3                      : ok=346  changed=85   unreachable=0    failed=0    s
 node6                      : ok=186  changed=35   unreachable=0    failed=0    skipped=166  rescued=0    ignored=0
 
 
-real	15m58.005s
-user	4m50.743s
-sys	1m42.639s
+real	9m44.697s
+user	2m38.611s
+sys	1m1.272s
 How to connect?
 sudo su - enterprisedb
 psql bdrdb
