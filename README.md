@@ -62,21 +62,22 @@ node6                     running (virtualbox)  -> Barman
 ```
 
 # Deploy EDB Postgres Distributed (PGD)
-- Connect to node0
+Connect to node0
 
 ```
 vagrant ssh node0
 ```
-- This step will use TPA [Trusted Postgres Architect](https://www.enterprisedb.com/docs/tpa/latest/) to deploy EDB Postgres Distributed.
-- Connect as root:
+This step will use TPA [Trusted Postgres Architect](https://www.enterprisedb.com/docs/tpa/latest/) to deploy EDB Postgres Distributed.
+
+Connect as root:
 ```
 sudo -i
 ```
-- To be able to download PGD, it is necessary to setup this variable with the correct value.
+Setup this variable with your EDB repo credential value.
 ```
 export repo_credentials=<your_repo_token>
 ```
-
+Deploy PGD.
 ```
 cd /vagrant
 ./01_install_pgd.sh
@@ -100,7 +101,7 @@ sudo su - enterprisedb
 psql bdrdb
 ```
 
-# Check you PGD cluster
+# Check your PGD cluster
 Open a new terminal session and execute these commands:
 ```
 vagrant ssh node1
@@ -121,8 +122,8 @@ name
 (3 rows)
 ```
 # Add a new node
-Execute this command to create a new PGD node (node4) with Postgres 15.x version:
-- Connect to node0:
+Execute this command to create a new PGD node (node4) with Postgres 15.x and Rocky Linux 9 versions:
+Connect to node0:
 ```
 vagrant ssh node0
 sudo -i
@@ -150,19 +151,22 @@ Connect to node0
 vagrant ssh node0
 cd /vagrant/
 ./os_version.sh
+node1: OS version: Rocky Linux release 8.9 (Green Obsidian)	 Database version: 14.11.0
+node2: OS version: Rocky Linux release 8.9 (Green Obsidian)	 Database version: 14.11.0
+node3: OS version: Rocky Linux release 8.9 (Green Obsidian)	 Database version: 14.11.0
+node6: OS version: Rocky Linux release 8.9 (Green Obsidian)	 Database version: 14.11.0
 ```
 
-# Upgrade Node
-- Connect to the node you want to upgrade (ex: node1)
+# Upgrade Nodes
+Connect to the node you want to upgrade (ex: node1)
 ```
-vagrant ssh node1
+vagrant ssh node0
 ```
-- Verify ./upgrade/config.sh file to select the right Postgres version
-- Execute command:
+Verify ./upgrade/config.sh file to select the right Postgres version
+Execute command:
 ```
-/vagrant/upgrade/upgrade.sh
+ssh vagrant@node1 'cd /vagrant/upgrades && /vagrant/upgrades/upgrade.sh'
 ```
-
 
 # Check you PGD cluster
 Open a new terminal session and execute these commands. Check the node4 status (CATCHUP, PROMOTING,ACTIVE):
