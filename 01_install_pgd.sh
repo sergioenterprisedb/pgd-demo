@@ -9,7 +9,6 @@ fi
 export credentials=$repo_credentials
 
 # bat installation
-#rpm -ivh http://repo.openfusion.net/centos7-x86_64/bat-0.7.0-1.of.el7.x86_64.rpm 
 # https://www.linode.com/docs/guides/how-to-install-and-use-the-bat-command-on-linux/
 cd /tmp
 curl -o bat.zip -L https://github.com/sharkdp/bat/releases/download/v0.18.2/bat-v0.18.2-x86_64-unknown-linux-musl.tar.gz
@@ -18,21 +17,18 @@ sudo mv bat-v0.18.2-x86_64-unknown-linux-musl /usr/local/bat
 cd -
 # bat installation
 
-# PGD 5.x
+# EDB Postgres Distributed Repository setup
 curl -1sLf "https://downloads.enterprisedb.com/$credentials/postgres_distributed/setup.rpm.sh" | sudo -E bash
 
-#yum -y install python39 wget chrony tpaexec tpaexec-deps
-
-# TPA
+# Install TPA and Python 3.9
 sudo dnf -y remove python3
 sudo yum -y install tpaexec
 sudo yum -y install python39 python39-pip epel-release git openvpn patch
 
-git clone https://github.com/enterprisedb/tpa.git ~/tpa
-
 cat >> ~/.bash_profile <<EOF
 alias bat="/usr/local/bat/bat -pp"
-export PATH=$PATH:$HOME/tpa/bin
+export PATH=$PATH:/opt/EDB/TPA/bin
+export EDB_SUBSCRIPTION_TOKEN=${credentials}
 EOF
 source ~/.bash_profile
 
@@ -40,22 +36,8 @@ source ~/.bash_profile
 systemctl enable --now chronyd
 chronyc sources
 
-cat >> ~/.bash_profile <<EOF
-alias bat="/usr/local/bat/bat -pp"
-export PATH=$PATH:/opt/EDB/TPA/bin
-export EDB_SUBSCRIPTION_TOKEN=${credentials}
-EOF
-
-source ~/.bash_profile
-export PATH=$PATH:/opt/EDB/TPA/bin
-export EDB_SUBSCRIPTION_TOKEN=${credentials}
-
-
-# Install dependencies
 tpaexec setup
-#tpaexec setup --use-2q-ansible
 
-# Test
 tpaexec selftest
 
 mkdir ~/clusters
@@ -81,9 +63,7 @@ tpaexec configure ~/clusters/speedy \
     --pgd-proxy-routing local \
     --hostnames-unsorted
 
-# Modify pg_hba.conf
 cp ~/clusters/speedy/config.yml ~/clusters/speedy/config.yml.1
-
 
 # Key paring remove
 sed -i 's/keyring_backend/#keyring_backend/' ~/clusters/speedy/config.yml
@@ -112,9 +92,9 @@ tpaexec ping ~/clusters/speedy
 # Deploy
 tpaexec deploy ~/clusters/speedy
 
-# Deprovision
-#tpaexec deprovision ~/clusters/speedy
-
 echo "How to connect?"
 echo "sudo su - enterprisedb"
 echo "psql bdrdb"
+
+# Deprovision
+#tpaexec deprovision ~/clusters/speedy
