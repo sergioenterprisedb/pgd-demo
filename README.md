@@ -35,7 +35,7 @@ This environment will contain 7 VM's:
 │  OS: Rocky Linux 8.x │  │
 └──────────────────────┘  │    ┌─────────────────────────┐
                           │───►│  node4 - PGD            │
-                          │    │  OS: Rocky Linux 8.x    │
+                          │    │  OS: Rocky Linux 9.x    │
                           │    │  DB: PostgreSQL 14.x    │
                           │    └─────────────────────────┘
                           │    ┌─────────────────────────┐
