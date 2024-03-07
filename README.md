@@ -187,7 +187,7 @@ cd /vagrant/
 node1: OS version: Rocky Linux release 8.9 (Green Obsidian)	 Database version: 14.11.0
 node2: OS version: Rocky Linux release 8.9 (Green Obsidian)	 Database version: 14.11.0
 node3: OS version: Rocky Linux release 8.9 (Green Obsidian)	 Database version: 14.11.0
-node4: OS version: Rocky Linux release 9.3 (Blue Onyx)	     Database version: 15.6.0
+node4: OS version: Rocky Linux release 9.3 (Blue Onyx)       Database version: 15.6.0
 node6: OS version: Rocky Linux release 8.9 (Green Obsidian)	 Database version: 15.6.0
 ```
 
@@ -212,7 +212,6 @@ postgres_old_version=14
 postgres_new_version=15
 ...
 ...
-
 ```
 Execute these commands:
 ```
@@ -231,7 +230,7 @@ cd /vagrant/
 node1: OS version: Rocky Linux release 8.9 (Green Obsidian)	 Database version: 15.6.0
 node2: OS version: Rocky Linux release 8.9 (Green Obsidian)	 Database version: 15.6.0
 node3: OS version: Rocky Linux release 8.9 (Green Obsidian)	 Database version: 15.6.0
-node4: OS version: Rocky Linux release 9.3 (Blue Onyx)	     Database version: 15.6.0
+node4: OS version: Rocky Linux release 9.3 (Blue Onyx)       Database version: 15.6.0
 node6: OS version: Rocky Linux release 8.9 (Green Obsidian)	 Database version: 15.6.0
 ```
 **Notice that all nodes are in PostgreSQL 15.x version!**
@@ -243,47 +242,23 @@ vagrant ssh node1
 
 [vagrant@node1 ~]$ sudo su - enterprisedb
 Last login: Thu Aug 24 10:45:34 UTC 2023 on pts/0
-enterprisedb@node1:~ $ psql bdrdb
-psql (14.9.0, server 14.9.0)
-Type "help" for help.
 
-bdrdb=# select * from bdr.node_summary ;
+[enterprisedb@node1 ~]$ pgd check-health
+Check      Status Message
+-----      ------ -------
+ClockSkew  Ok     All BDR node pairs have clockskew within permissible limit
+Connection Ok     All BDR nodes are accessible
+Raft       Ok     Raft Consensus is working correctly
+Replslots  Ok     All BDR replication slots are working correctly
+Version    Ok     All nodes are running same BDR versions
 
- node_name | node_group_name |                  interface_connstr                   | peer_state_name | peer_target_state_name | node_seq_id | node_local_dbname |  node_id   | node_group_id | node_kind_name
------------+-----------------+------------------------------------------------------+-----------------+------------------------+-------------+-------------------+------------+---------------+----------------
- node2     | dc1_subgroup    | host=node2 port=5444 dbname=bdrdb user=enterprisedb  | ACTIVE          | ACTIVE                 |           1 | bdrdb             | 3367056606 |    1302278103 | data
- node1     | dc1_subgroup    | host=node1 port=5444 dbname=bdrdb user=enterprisedb  | ACTIVE          | ACTIVE                 |           2 | bdrdb             | 1148549230 |    1302278103 | data
- node3     | dc1_subgroup    | host=node3 port=5444 dbname=bdrdb user=enterprisedb  | ACTIVE          | ACTIVE                 |           3 | bdrdb             |  914546798 |    1302278103 | data
-(3 rows)
-
-bdrdb=# \watch 5;
- ...
- ...
- ...
- node_name | node_group_name |                  interface_connstr                   | peer_state_name | peer_target_state_name | node_seq_id | node_local_dbname |  node_id   | node_group_id | node_kind_name
------------+-----------------+------------------------------------------------------+-----------------+------------------------+-------------+-------------------+------------+---------------+----------------
- node2     | dc1_subgroup    | host=node2 port=5444 dbname=bdrdb user=enterprisedb  | ACTIVE          | ACTIVE                 |           1 | bdrdb             | 3367056606 |    1302278103 | data
- node1     | dc1_subgroup    | host=node1 port=5444 dbname=bdrdb user=enterprisedb  | ACTIVE          | ACTIVE                 |           2 | bdrdb             | 1148549230 |    1302278103 | data
- node3     | dc1_subgroup    | host=node3 port=5444 dbname=bdrdb user=enterprisedb  | ACTIVE          | ACTIVE                 |           3 | bdrdb             |  914546798 |    1302278103 | data
- node4     | dc1_subgroup    | host=node4 port=5444 dbname=bdrdb user=enterprisedb  | CATCHUP         | ACTIVE                 |           4 | bdrdb             |  759086513 |    1302278103 | data
-(4 rows)
-
- node_name | node_group_name |                  interface_connstr                   | peer_state_name | peer_target_state_name | node_seq_id | node_local_dbname |  node_id   | node_group_id | node_kind_name
------------+-----------------+------------------------------------------------------+-----------------+------------------------+-------------+-------------------+------------+---------------+----------------
- node2     | dc1_subgroup    | host=node2 port=5444 dbname=bdrdb user=enterprisedb  | ACTIVE          | ACTIVE                 |           1 | bdrdb             | 3367056606 |    1302278103 | data
- node1     | dc1_subgroup    | host=node1 port=5444 dbname=bdrdb user=enterprisedb  | ACTIVE          | ACTIVE                 |           2 | bdrdb             | 1148549230 |    1302278103 | data
- node3     | dc1_subgroup    | host=node3 port=5444 dbname=bdrdb user=enterprisedb  | ACTIVE          | ACTIVE                 |           3 | bdrdb             |  914546798 |    1302278103 | data
- node4     | dc1_subgroup    | host=node4 port=5444 dbname=bdrdb user=enterprisedb  | PROMOTING       | ACTIVE                 |           4 | bdrdb             |  759086513 |    1302278103 | data
-(4 rows)
-
- node_name | node_group_name |                  interface_connstr                   | peer_state_name | peer_target_state_name | node_seq_id | node_local_dbname |  node_id   | node_group_id | node_kind_name
------------+-----------------+------------------------------------------------------+-----------------+------------------------+-------------+-------------------+------------+---------------+----------------
- node2     | dc1_subgroup    | host=node2 port=5444 dbname=bdrdb user=enterprisedb  | ACTIVE          | ACTIVE                 |           1 | bdrdb             | 3367056606 |    1302278103 | data
- node1     | dc1_subgroup    | host=node1 port=5444 dbname=bdrdb user=enterprisedb  | ACTIVE          | ACTIVE                 |           2 | bdrdb             | 1148549230 |    1302278103 | data
- node3     | dc1_subgroup    | host=node3 port=5444 dbname=bdrdb user=enterprisedb  | ACTIVE          | ACTIVE                 |           3 | bdrdb             |  914546798 |    1302278103 | data
- node4     | dc1_subgroup    | host=node4 port=5444 dbname=bdrdb user=enterprisedb  | ACTIVE          | ACTIVE                 |           4 | bdrdb             |  759086513 |    1302278103 | data
-(4 rows)
-
+[enterprisedb@node1 ~]$ pgd show-version
+Node  BDR Version Postgres Version
+----  ----------- ----------------
+node1 5.4.0       15.6.0
+node2 5.4.0       15.6.0
+node3 5.4.0       15.6.0
+node4 5.4.0       15.6.0
 ```
 
 # Time to prepare the platform
@@ -298,5 +273,10 @@ This command will destroy all the VM's created by vagrant (node0 to node6).
 ```
 You can destroy one by one if necessary:
 ```
+vagrant destroy -f node1
+vagrant destroy -f node2
+vagrant destroy -f node3
+vagrant destroy -f node4
 vagrant destroy -f node5
+vagrant destroy -f node6
 ```
