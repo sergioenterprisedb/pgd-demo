@@ -127,18 +127,31 @@ vagrant ssh node1
 
 [vagrant@node1 ~]$ sudo su - enterprisedb
 Last login: Thu Aug 24 10:45:34 UTC 2023 on pts/0
-enterprisedb@node1:~ $ psql bdrdb
-psql (14.9.0, server 14.9.0)
-Type "help" for help.
+enterprisedb@node1:~ $ pgd check-health
 
-bdrdb=# select * from bdr.node_summary ;
- node_name | node_group_name |                  interface_connstr                   | peer_state_name | peer_target_state_name | node_seq_id | node_local_dbname |  node_id   | node_group_id | node_kind_
-name
------------+-----------------+------------------------------------------------------+-----------------+------------------------+-------------+-------------------+------------+---------------+-----------
- node2     | dc1_subgroup    | host=node2 port=5444 dbname=bdrdb user=enterprisedb  | ACTIVE          | ACTIVE                 |           1 | bdrdb             | 3367056606 |    1302278103 | data
- node1     | dc1_subgroup    | host=node1 port=5444 dbname=bdrdb user=enterprisedb  | ACTIVE          | ACTIVE                 |           2 | bdrdb             | 1148549230 |    1302278103 | data
- node3     | dc1_subgroup    | host=node3 port=5444 dbname=bdrdb user=enterprisedb  | ACTIVE          | ACTIVE                 |           3 | bdrdb             |  914546798 |    1302278103 | data
-(3 rows)
+Check      Status Message
+-----      ------ -------
+ClockSkew  Ok     All BDR node pairs have clockskew within permissible limit
+Connection Ok     All BDR nodes are accessible
+Raft       Ok     Raft Consensus is working correctly
+Replslots  Ok     All BDR replication slots are working correctly
+Version    Ok     All nodes are running same BDR versions
+
+enterprisedb@node1:~ $ pgd show-nodes
+Node  Node ID    Group        Type Current State Target State Status Seq ID
+----  -------    -----        ---- ------------- ------------ ------ ------
+node1 1148549230 dc1_subgroup data ACTIVE        ACTIVE       Up     1
+node2 3367056606 dc1_subgroup data ACTIVE        ACTIVE       Up     2
+node3 914546798  dc1_subgroup data ACTIVE        ACTIVE       Up     3
+
+
+enterprisedb@node1:~ $ pgd show-nodes
+Node  Node ID    Group        Type Current State Target State Status Seq ID
+----  -------    -----        ---- ------------- ------------ ------ ------
+node1 1148549230 dc1_subgroup data ACTIVE        ACTIVE       Up     1
+node2 3367056606 dc1_subgroup data ACTIVE        ACTIVE       Up     2
+node3 914546798  dc1_subgroup data ACTIVE        ACTIVE       Up     3
+
 ```
 # Add a new node
 Execute this command to create a new PGD node (node4) with Postgres 15.x and Rocky Linux 9 versions:
@@ -150,22 +163,22 @@ sudo -i
 cd /vagrant
 ./02_add_new_node.sh 4
 ...
-PLAY RECAP *************************************************************************************************************************
+PLAY RECAP *************************************************************************************************************
 localhost                  : ok=4    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
-node1                      : ok=372  changed=10   unreachable=0    failed=0    skipped=250  rescued=0    ignored=0
-node2                      : ok=330  changed=8    unreachable=0    failed=0    skipped=246  rescued=0    ignored=0
-node3                      : ok=330  changed=8    unreachable=0    failed=0    skipped=246  rescued=0    ignored=0
-node4                      : ok=347  changed=83   unreachable=0    failed=0    skipped=237  rescued=0    ignored=0
-node6                      : ok=176  changed=2    unreachable=0    failed=0    skipped=170  rescued=0    ignored=0
+node1                      : ok=384  changed=12   unreachable=0    failed=0    skipped=260  rescued=0    ignored=2
+node2                      : ok=337  changed=10   unreachable=0    failed=0    skipped=256  rescued=0    ignored=1
+node3                      : ok=337  changed=10   unreachable=0    failed=0    skipped=256  rescued=0    ignored=1
+node4                      : ok=353  changed=92   unreachable=0    failed=0    skipped=247  rescued=0    ignored=1
+node6                      : ok=185  changed=5    unreachable=0    failed=0    skipped=179  rescued=0    ignored=1
 
 
-real	21m14.197s
-user	9m23.203s
-sys	2m39.701s
+real	9m13.664s
+user	3m54.807s
+sys	1m21.532s
 ```
 At this moment, node4 has been added with an EPAS 15.x
 
-# Verify VM's OS version
+# Verify VM's OS and DB versions
 Connect to node0
 ```
 vagrant ssh node0
@@ -174,19 +187,54 @@ cd /vagrant/
 node1: OS version: Rocky Linux release 8.9 (Green Obsidian)	 Database version: 14.11.0
 node2: OS version: Rocky Linux release 8.9 (Green Obsidian)	 Database version: 14.11.0
 node3: OS version: Rocky Linux release 8.9 (Green Obsidian)	 Database version: 14.11.0
-node6: OS version: Rocky Linux release 8.9 (Green Obsidian)	 Database version: 14.11.0
+node4: OS version: Rocky Linux release 9.3 (Blue Onyx)	     Database version: 15.6.0
+node6: OS version: Rocky Linux release 8.9 (Green Obsidian)	 Database version: 15.6.0
 ```
 
 # Upgrade Nodes
-Connect to the node you want to upgrade (ex: node1)
+Connect to the node0
 ```
 vagrant ssh node0
 ```
-Verify ./upgrade/config.sh file to select the right Postgres version
-Execute command:
+Verify ./upgrade/config.sh file and check old and new Postgres versions variables (14 and 15).
+```
+[vagrant@node0 vagrant]$ cat /vagrant/upgrades/config.sh
+#!/bin/bash
+pgd_group=speedy
+pgd_subgroup=dc1_subgroup
+
+linux_package_adm=yum
+
+pgd_version=edb-bdr5-epas15
+pgd_utilities=edb-bdr-utilities
+
+postgres_old_version=14
+postgres_new_version=15
+...
+...
+
+```
+Execute these commands:
 ```
 ssh vagrant@node1 'cd /vagrant/upgrades && /vagrant/upgrades/upgrade.sh'
+ssh vagrant@node2 'cd /vagrant/upgrades && /vagrant/upgrades/upgrade.sh'
+ssh vagrant@node3 'cd /vagrant/upgrades && /vagrant/upgrades/upgrade.sh'
+# Note that node4 is already in PostgreSQL 15.x
 ```
+
+# Verify VM's OS and DB versions
+Connect to node0
+```
+vagrant ssh node0
+cd /vagrant/
+./os_version.sh
+node1: OS version: Rocky Linux release 8.9 (Green Obsidian)	 Database version: 15.6.0
+node2: OS version: Rocky Linux release 8.9 (Green Obsidian)	 Database version: 15.6.0
+node3: OS version: Rocky Linux release 8.9 (Green Obsidian)	 Database version: 15.6.0
+node4: OS version: Rocky Linux release 9.3 (Blue Onyx)	     Database version: 15.6.0
+node6: OS version: Rocky Linux release 8.9 (Green Obsidian)	 Database version: 15.6.0
+```
+**Notice that all nodes are in PostgreSQL 15.x version!**
 
 # Check you PGD cluster
 Open a new terminal session and execute these commands. Check the node4 status (CATCHUP, PROMOTING,ACTIVE):
