@@ -1,38 +1,51 @@
 # EDB Postgres Distributed deployments
-In this demo I'll show how deploy and upgrade a [EDB Postgres Distributed](https://www.enterprisedb.com/products/edb-postgres-distributed) 5.x (PGD) environment.
+In this demo I'll show how deploy and upgrade a [EDB Postgres Distributed](https://www.enterprisedb.com/products/edb-postgres-distributed) 5.x (PGD) environment with different PostgreSQL and OS versions in a local environment with [Vagrant](https://www.vagrantup.com) and [VirtualBox](https://www.virtualbox.org).
+*With this solution, it will not be necessary to provision resources in a cloud provider.*
 
 Steps:
 - Deploy VM's (with Vagrant and VirtualBox)
-  - 3 nodes Rocky Linux 8
+  - 3 nodes with *Rocky Linux 8*
 - Install TPA [Trusted Postgres Architect](https://www.enterprisedb.com/docs/tpa/latest/)
-- Deploy 3 PGD nodes with TPA (PostgreSQL 14.x)
-- Add a new PGD node with TPA (PostgreSQL 15.x)
-- Upgrade PGD cluster from PostgreSQL 14.x to 15.x
+- Deploy with TPA 3 PGD nodes (*PostgreSQL 14.x*)
+- Add with TPA a new PGD node (*Rocky Linux 9.x* and *PostgreSQL 15.x*)
+- Upgrade PGD cluster nodes (1,2 and 3) from PostgreSQL 14.x to 15.x in Rocky Linux 8.x
 
 You can find the EDB Postgres Distributed documentation [here](https://www.enterprisedb.com/docs/pgd/latest/).
 
 This environment will contain 7 VM's:
 ```
 
-                        ┌───────────────┐
-                   ┌───►│  node1 - PGD  │
-                   │    └───────────────┘
-                   │    ┌───────────────┐
-                   │───►│  node2 - PGD  │
-                   │    └───────────────┘
-                   │    ┌───────────────┐
-                   │───►│  node3 - PGD  │
-┌───────────────┐  │    └───────────────┘
-│  node0 - TPA  │──│
-└───────────────┘  │    ┌───────────────┐
-                   │───►│  node4 - PGD  │
-                   │    └───────────────┘
-                   │    ┌───────────────┐
-                   │───►│  node5 - PGD  │ (Optional)
-                   │    └───────────────┘
-                   │    ┌───────────────────┐
-                   └───►│  node6 -> barman  │
-                        └───────────────────┘
+                               ┌─────────────────────────┐
+                          ┌───►│  node1 - PGD            │
+                          │    │  OS: Rocky Linux 8.x    │
+                          │    │  DB: PostgreSQL 14.x    │
+                          │    └─────────────────────────┘
+                          │    ┌─────────────────────────┐
+                          │───►│  node2 - PGD            │
+                          │    │  OS: Rocky Linux 8.x    │
+                          │    │  DB: PostgreSQL 14.x    │
+                          │    └─────────────────────────┘
+                          │    ┌─────────────────────────┐
+                          │───►│  node3 - PGD            │
+                          │    │  OS: Rocky Linux 8.x    │
+                          │    │  DB: PostgreSQL 14.x    │
+┌──────────────────────┐  │    └─────────────────────────┘
+│  node0 - TPA         │──│
+│  OS: Rocky Linux 8.x │  │
+└──────────────────────┘  │    ┌─────────────────────────┐
+                          │───►│  node4 - PGD            │
+                          │    │  OS: Rocky Linux 8.x    │
+                          │    │  DB: PostgreSQL 14.x    │
+                          │    └─────────────────────────┘
+                          │    ┌─────────────────────────┐
+                          │───►│  node5 - PGD - Optional │
+                          │    │  OS: Rocky Linux 8.x    │
+                          │    │  DB: PostgreSQL 14.x    │
+                          │    └─────────────────────────┘
+                          │    ┌─────────────────────────┐
+                          └───►│  node6 -> barman        │
+                               │  OS: Rocky Linux 8.x    │
+                               └─────────────────────────┘
 
 ```
 
