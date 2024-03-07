@@ -144,6 +144,7 @@ name
 Execute this command to create a new PGD node (node4) with Postgres 15.x and Rocky Linux 9 versions:
 Connect to node0:
 ```
+source ~/.bash_profile
 vagrant ssh node0
 sudo -i
 cd /vagrant
